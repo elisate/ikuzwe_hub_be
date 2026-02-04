@@ -8,5 +8,6 @@ const mainRouter = Router();
 mainRouter.use("/auth", authRouter);
 mainRouter.use("/program", programRoutes);
 mainRouter.use("/team", teamRoutes);
+mainRouter.use("/news", newsRouter);
 
 export default mainRouter;
