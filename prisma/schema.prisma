@@ -25,3 +25,13 @@ enum UserRole {
   USER
   ADMIN
 }
+
+model Progam {
+  id          Int      @id @default(autoincrement())
+  title        String
+  img         String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("programs")
+}
