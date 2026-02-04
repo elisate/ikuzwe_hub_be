@@ -8,27 +8,25 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid()) // Change here
   firstName String
   lastName  String
   email     String   @unique
   password  String
   avatar    String?
-  // Changed from String to UserRole enum
   role      UserRole @default(USER) 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map("users")
 }
-
 enum UserRole {
   USER
   ADMIN
 }
 
 model Progam {
-  id          Int      @id @default(autoincrement())
-  title        String
+  id          String   @id @default(uuid()) // Change here
+  title       String
   img         String?
   description String?
   createdAt   DateTime @default(now())
@@ -37,36 +35,46 @@ model Progam {
 }
 
 model TeamMember {
-  id        Int      @id @default(autoincrement())
-  name      String
-  role      String
-  description String?
-  phone     String?
-  email     String?
+  id           String   @id @default(uuid()) // Change here
+  name         String
+  role         String
+  description  String?
+  phone        String?
+  email        String?
   socialsMedia String?
-  profile     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  profile      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   @@map("team_members")
 }
 
 model News {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(uuid()) // Change here
   title     String
   content   String
   category  String?
-  images    NewsImage[] // Relation to multiple images
+  images    NewsImage[] 
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-
   @@map("news")
 }
 
 model NewsImage {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(uuid()) // Change here
   url     String
-  newsId  Int
+  newsId  String // This MUST match the News.id type
   news    News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
-
   @@map("news_images")
+}
+
+model contact {
+  id        String   @id @default(uuid()) // Change here
+  firstName String
+  lastName  String
+  subject   String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("contacts")
 }

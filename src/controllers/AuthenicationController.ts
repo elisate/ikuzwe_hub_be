@@ -8,13 +8,15 @@ const prisma = new PrismaClient();
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
   try {
-    // 1. Destructure 'role' from the request body
-    const { firstName, lastName, email, password, avatar, role } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
+
+    // Capture the avatar URL from Multer (Cloudinary)
+    const avatarUrl = req.file ? req.file.path : req.body.avatar;
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -25,9 +27,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         lastName,
         email,
         password: hashedPassword,
-        avatar,
-        // 2. Use the role from JSON, or default to USER if not provided
-        // Use type casting (as UserRole) so TypeScript knows it's valid
+        avatar: avatarUrl, // Now supports both file upload and string URL
         role: (role as UserRole) || UserRole.USER 
       }
     });
@@ -51,7 +51,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
     // Generate token with "Full Details"
     const token = generateToken({ 
-      id: user.id, 
+      id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,

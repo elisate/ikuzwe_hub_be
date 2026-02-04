@@ -43,9 +43,12 @@ export const getAllNews = async (req: Request, res: Response): Promise<Response>
 
 export const deleteNews = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
-    // Because of 'onDelete: Cascade' in schema, this deletes images too!
-    await prisma.news.delete({ where: { id: Number(id) } });
+   const { id } = req.params;
+
+// No Number() conversion needed because UUID is a string
+await prisma.news.delete({ 
+  where: { id } 
+});
     return res.json({ message: "News and related images deleted" });
   } catch (error) {
     return res.status(500).json({ error: (error as Error).message });
@@ -54,9 +57,9 @@ export const deleteNews = async (req: Request, res: Response): Promise<Response>
 
 export const updateNews = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; // UUID string from URL
     const { title, content, category } = req.body;
-    const files = req.files as Express.Multer.File[]; // New images from Cloudinary
+    const files = req.files as Express.Multer.File[]; 
 
     // 1. Prepare the update data for text fields
     const updateData: any = {
@@ -65,8 +68,7 @@ export const updateNews = async (req: Request, res: Response): Promise<Response>
       category,
     };
 
-    // 2. If new images are uploaded, use 'create' inside 'images' 
-    // to add them to the existing list (Nested Update)
+    // 2. Add new images to the collection if they exist
     if (files && files.length > 0) {
       updateData.images = {
         create: files.map((file) => ({
@@ -75,10 +77,11 @@ export const updateNews = async (req: Request, res: Response): Promise<Response>
       };
     }
 
+    // 3. Perform update using the UUID string directly
     const updatedNews = await prisma.news.update({
-      where: { id: Number(id) },
+      where: { id }, // REMOVED Number(id)
       data: updateData,
-      include: { images: true }, // Return the updated news with all images
+      include: { images: true }, 
     });
 
     return res.json(updatedNews);

@@ -41,12 +41,13 @@ export const getAllMembers = async (req: Request, res: Response): Promise<Respon
   }
 };
 
-// 3. READ ONE - Get member by ID
+// 3. READ ONE - Get member by ID (UUID)
 export const getMemberById = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; // Already a string
+
     const member = await prisma.teamMember.findUnique({
-      where: { id: Number(id) }
+      where: { id } // Removed Number(id)
     });
 
     if (!member) return res.status(404).json({ message: "Team member not found" });
@@ -57,7 +58,7 @@ export const getMemberById = async (req: Request, res: Response): Promise<Respon
   }
 };
 
-// 4. UPDATE - Update details or profile picture
+// 4. UPDATE - Update details or profile picture (UUID)
 export const updateMember = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
@@ -69,7 +70,7 @@ export const updateMember = async (req: Request, res: Response): Promise<Respons
     }
 
     const updatedMember = await prisma.teamMember.update({
-      where: { id: Number(id) },
+      where: { id }, // Removed Number(id)
       data: updateData
     });
 
@@ -79,13 +80,13 @@ export const updateMember = async (req: Request, res: Response): Promise<Respons
   }
 };
 
-// 5. DELETE - Remove a team member
+// 5. DELETE - Remove a team member (UUID)
 export const deleteMember = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
 
     await prisma.teamMember.delete({
-      where: { id: Number(id) }
+      where: { id } // Removed Number(id)
     });
 
     return res.json({ message: "Team member removed successfully" });

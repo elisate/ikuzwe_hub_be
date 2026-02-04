@@ -40,11 +40,13 @@ export const getAllPrograms = async (req: Request, res: Response): Promise<Respo
 };
 
 // 3. READ ONE - Get a single program by ID
+// 3. READ ONE - Get a single program by ID (UUID)
 export const getProgramById = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; 
+    
     const program = await prisma.progam.findUnique({
-      where: { id: Number(id) }
+      where: { id } // Removed Number(id)
     });
 
     if (!program) return res.status(404).json({ message: "Program not found" });
@@ -55,22 +57,20 @@ export const getProgramById = async (req: Request, res: Response): Promise<Respo
   }
 };
 
-// 4. UPDATE - Update title, description, or image
+// 4. UPDATE - Update title, description, or image (UUID)
 export const updateProgram = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
 
-    // Build the data object dynamically
     const updateData: any = { title, description };
 
-    // If a new file is uploaded, update the image field
     if (req.file) {
       updateData.img = req.file.path;
     }
 
     const updatedProgram = await prisma.progam.update({
-      where: { id: Number(id) },
+      where: { id }, // Removed Number(id)
       data: updateData
     });
 
@@ -80,13 +80,13 @@ export const updateProgram = async (req: Request, res: Response): Promise<Respon
   }
 };
 
-// 5. DELETE - Remove a program
+// 5. DELETE - Remove a program (UUID)
 export const deleteProgram = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
 
     await prisma.progam.delete({
-      where: { id: Number(id) }
+      where: { id } // Removed Number(id)
     });
 
     return res.json({ message: "Program deleted successfully" });

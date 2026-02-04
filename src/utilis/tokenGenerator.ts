@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_key';
 
 // Interface representing the full user details inside the token
 interface TokenPayload {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
