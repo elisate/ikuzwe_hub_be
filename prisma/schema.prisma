@@ -35,3 +35,17 @@ model Progam {
   updatedAt   DateTime @updatedAt
   @@map("programs")
 }
+
+model TeamMember {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  description String?
+  phone     String?
+  email     String?
+  socialsMedia String?
+  profile     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("team_members")
+}
