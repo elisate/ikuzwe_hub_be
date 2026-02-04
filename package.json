@@ -1,0 +1,29 @@
+{
+  "name": "codingprogress",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "test": "npm run dev",
+    "dev": "nodemon src/server.ts"
+  },
+  "author": "elisa",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.9.1",
+    "express": "^5.1.0",
+    "prisma": "^6.17.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.17.1",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.10"
+  }
+}
