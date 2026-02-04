@@ -1,7 +1,8 @@
 import { Router } from "express";
 import authRouter from "./authRoutes";
 import programRoutes from "./programRoutes";
-import teamRoutes from "./teamRoutes";  
+import teamRoutes from "./teamRoutes";
+import newsRouter from "./newsRoute";  
 const mainRouter = Router();
 
 mainRouter.use("/auth", authRouter);

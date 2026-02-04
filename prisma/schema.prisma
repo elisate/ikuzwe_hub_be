@@ -49,3 +49,24 @@ model TeamMember {
   updatedAt DateTime @updatedAt
   @@map("team_members")
 }
+
+model News {
+  id        Int         @id @default(autoincrement())
+  title     String
+  content   String
+  category  String?
+  images    NewsImage[] // Relation to multiple images
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@map("news")
+}
+
+model NewsImage {
+  id      Int    @id @default(autoincrement())
+  url     String
+  newsId  Int
+  news    News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@map("news_images")
+}
