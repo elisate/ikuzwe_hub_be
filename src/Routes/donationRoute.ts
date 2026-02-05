@@ -8,7 +8,7 @@ import {
 const donationRouter = Router();
 
 donationRouter.post('/createDonation', createDonation);         
-donationRouter.get('/getDonations)', getDonations);         
+donationRouter.get('/getDonations', getDonations);         
 donationRouter .patch('/updateDonationStatus/:id', updateDonationStatus); 
 donationRouter.delete('/deleteDonation/:id', deleteDonation);
 
