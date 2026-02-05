@@ -79,3 +79,27 @@ model contact {
   updatedAt DateTime @updatedAt
   @@map("contacts")
 }
+
+model donation {
+  id        String   @id @default(uuid()) // Change here
+  donorName      String
+  donorEmail     String
+  donorPhone     String?
+  amount    Float
+  status    DonationStatus @default(PENDING)
+  paymentMethod    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("donations")
+}
+
+enum DonationStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+enum DonationMethod {
+  CREDIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+} 
