@@ -16,6 +16,6 @@ mainRouter.use("/news", newsRouter);
 mainRouter.use("/contact", contactRouter);  // Add contact routes
 mainRouter.use("/logout", logoutRouter);  // Add logout routes
 mainRouter.use("/donation", donationRouter);  // Add logout routes
-mainRouter.use("/success_story", success_storyRouter);  // Add success story routes
+mainRouter.use("/success_story", success_storyRouter); 
 
 export default mainRouter;
