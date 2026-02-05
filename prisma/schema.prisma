@@ -93,6 +93,16 @@ model donation {
   @@map("donations")
 }
 
+model sucessStory {
+  id          String   @id @default(uuid()) // Change here
+  title       String
+  description String?
+  img         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("success_stories")
+}
+
 enum DonationStatus {
   PENDING
   COMPLETED
