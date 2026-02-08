@@ -102,7 +102,14 @@ model sucessStory {
   updatedAt   DateTime @updatedAt
   @@map("success_stories")
 }
-
+model keyAchievement {
+  id          String   @id @default(uuid()) // Change here
+  title       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("key_achievements")
+}
 enum DonationStatus {
   PENDING
   COMPLETED
