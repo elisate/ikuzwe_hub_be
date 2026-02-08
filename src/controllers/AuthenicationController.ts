@@ -48,7 +48,10 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
+// 2. Check if they are active BEFORE allowing the login to finish
+  if (!user.isActive) {
+    return res.status(403).json({ message: "Your account is deactivated." });
+  }
     // Generate token with "Full Details"
     const token = generateToken({ 
       id: user.id,

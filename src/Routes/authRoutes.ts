@@ -11,8 +11,8 @@ import {checkActiveStatus} from"../middlewares/checkActive"
 const authRouter = Router();
 
 authRouter.post("/register", register);
-authRouter.post("/login", checkActiveStatus,login);
+authRouter.post("/login",login);
 authRouter.get('/users', getAllUsers);
 authRouter.patch('/users/status/:id', toggleUserStatus);
-authRouter.put('/update-profile',upload.single('avatar'), updateProfile);
+authRouter.put('/update-profile',checkActiveStatus,upload.single('avatar'), updateProfile);
 export default authRouter;
