@@ -37,19 +37,33 @@ export const getDonations = async (_req: Request, res: Response) => {
 
 export const updateDonationStatus = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { status } = req.body; // Expecting PENDING, COMPLETED, or FAILED
+  const { status } = req.body; 
+
+  // Basic validation to prevent crashing if status is missing
+  if (!status) {
+    return res.status(400).json({ error: "Status is required" });
+  }
 
   try {
     const updated = await prisma.donation.update({
-      where: { id },
-      data: { status: status as DonationStatus }
+      where: { id: id },
+      data: { 
+        // Force uppercase to match Prisma Enum (e.g., "completed" -> "COMPLETED")
+        status: status.toUpperCase() as DonationStatus 
+      }
     });
+    
     res.json(updated);
-  } catch (error) {
-    res.status(500).json({ error: "Error updating status" });
+  } catch (error: any) {
+    // Log the error to your VS Code/Terminal console so you can see exactly why it failed
+    console.error("Prisma Update Error:", error);
+
+    res.status(500).json({ 
+      error: "Error updating status",
+      message: error.message 
+    });
   }
 };
-
 export const deleteDonation = async (req: Request, res: Response) => {
   try {
     await prisma.donation.delete({ where: { id: req.params.id } });
