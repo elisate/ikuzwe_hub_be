@@ -110,6 +110,18 @@ model keyAchievement {
   updatedAt   DateTime @updatedAt
   @@map("key_achievements")
 }
+
+model impact {
+  id                String   @id @default(uuid())
+  title             String?
+  description       String?
+  img               String?
+  actions_keypoints String?  // This will store "point1,point2,point3"
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("impacts")
+}
 enum DonationStatus {
   PENDING
   COMPLETED
