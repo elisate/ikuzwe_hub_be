@@ -116,7 +116,8 @@ model impact {
   title             String?
   description       String?
   img               String?
-  actions_keypoints String?  // This will store "point1,point2,point3"
+  // Use String[] for PostgreSQL, or Json for MySQL/SQLite
+  actions_keypoints String[] 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
