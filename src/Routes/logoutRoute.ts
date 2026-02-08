@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { logoutHandler } from '../helpers/logout'; // Import the component
-import router from './teamRoutes';
+
 
 
 const logoutRouter = Router();

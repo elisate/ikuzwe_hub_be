@@ -123,22 +123,21 @@ export const toggleUserStatus = async (req: Request, res: Response): Promise<Res
 
 export const updateProfile = async (req: Request, res: Response): Promise<Response> => {
   try {
-    // 1. Get User ID from the request (attached by your auth middleware)
-    const userId = (req as any).user?.id; 
+    // With Multer, these fields come from req.body
+    const { id, firstName, lastName, email, avatar } = req.body;
 
-    if (!userId) {
-      return res.status(401).json({ message: "Unauthorized: No user ID found" });
+    // 1. Check if ID exists to avoid Prisma crash
+    if (!id) {
+      return res.status(400).json({ 
+        message: "Missing User ID. Please ensure 'id' is sent in the form-data." 
+      });
     }
 
-    const { firstName, lastName, email } = req.body;
+    const avatarUrl = req.file ? req.file.path : avatar;
 
-    // 2. Check if a new file was uploaded via Multer
-    // If not, we keep the existing avatar URL from the body
-    const avatarUrl = req.file ? req.file.path : req.body.avatar;
-
-    // 3. Perform the update
+    // 2. Perform the Update
     const updatedUser = await prisma.user.update({
-      where: { id: userId },
+      where: { id: id }, // Prisma now gets the UUID string correctly
       data: {
         firstName,
         lastName,
@@ -147,19 +146,13 @@ export const updateProfile = async (req: Request, res: Response): Promise<Respon
       },
     });
 
-    // 4. Remove password from response for security
-    const { password: _, ...userWithoutPassword } = updatedUser;
-
     return res.status(200).json({
-      message: "Profile updated successfully",
-      user: userWithoutPassword
+      message: "Update successful",
+      user: updatedUser
     });
 
   } catch (error) {
-    // Handle Prisma specific errors (like email already taken)
-    if ((error as any).code === 'P2002') {
-      return res.status(400).json({ message: "Email is already in use by another account" });
-    }
+    // If the UUID is formatted incorrectly, Prisma throws a specific error
     return res.status(500).json({ error: (error as Error).message });
   }
 };
