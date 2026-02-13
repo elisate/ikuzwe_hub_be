@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteDonation = exports.updateDonationStatus = exports.getDonations = exports.createDonation = void 0;
 const client_1 = require("@prisma/client");
+const status = client_1.$Enums.DonationStatus.PENDING;
 const prisma = new client_1.PrismaClient();
 const createDonation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

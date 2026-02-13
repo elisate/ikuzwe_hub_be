@@ -24,9 +24,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProfile = exports.toggleUserStatus = exports.getAllUsers = exports.login = exports.register = void 0;
-const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const tokenGenerator_1 = require("../utilis/tokenGenerator");
+const client_1 = require("@prisma/client");
+const UserRole = client_1.$Enums.UserRole.USER;
 const prisma = new client_1.PrismaClient();
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -46,7 +47,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 email,
                 password: hashedPassword,
                 avatar: avatarUrl, // Now supports both file upload and string URL
-                role: role || client_1.UserRole.USER
+                role: role
             }
         });
         const { password: _ } = newUser, userWithoutPassword = __rest(newUser, ["password"]);

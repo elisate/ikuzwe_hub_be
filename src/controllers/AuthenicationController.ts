@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
-import { PrismaClient,UserRole} from '@prisma/client';
+
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../utilis/tokenGenerator';
+import { PrismaClient, $Enums } from '@prisma/client';
+const UserRole: $Enums.UserRole = $Enums.UserRole.USER;
 
 
 const prisma = new PrismaClient();
@@ -29,7 +31,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         email,
         password: hashedPassword,
         avatar: avatarUrl, // Now supports both file upload and string URL
-        role: (role as UserRole) || UserRole.USER 
+        role: (role as $Enums.UserRole) 
       }
     });
 
