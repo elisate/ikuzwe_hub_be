@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 // 2. Configure CORS options
 const corsOptions = {
-    origin: "http://localhost:8080", // Allow only this origin
+    origin: ["http://localhost:8080", "https://urakunzwe-community-hub-x13a.vercel.app"], // Allow only these origins
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Allow cookies if needed
     optionsSuccessStatus: 200
