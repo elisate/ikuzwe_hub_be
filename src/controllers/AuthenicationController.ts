@@ -6,6 +6,7 @@ import { generateToken } from '../utilis/tokenGenerator';
 const prisma = new PrismaClient();
 
 
+
 export const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { firstName, lastName, email, password, role } = req.body;
