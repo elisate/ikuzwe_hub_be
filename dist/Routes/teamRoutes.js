@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const teamController_1 = require("../controllers/teamController");
+const multer_1 = require("../middlewares/multer");
+const router = (0, express_1.Router)();
+router.post('/createMember', multer_1.upload.single('profile'), teamController_1.createMember);
+router.get('/getAllMembers', teamController_1.getAllMembers);
+router.get('/getMemberById/:id', teamController_1.getMemberById);
+router.put('/updateMember/:id', multer_1.upload.single('profile'), teamController_1.updateMember);
+router.delete('/deleteMember/:id', teamController_1.deleteMember);
+exports.default = router;

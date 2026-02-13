@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const AuthenicationController_1 = require("../controllers/AuthenicationController");
+const multer_1 = require("../middlewares/multer");
+const checkActive_1 = require("../middlewares/checkActive");
+const authRouter = (0, express_1.Router)();
+authRouter.post("/register", AuthenicationController_1.register);
+authRouter.post("/login", AuthenicationController_1.login);
+authRouter.get('/users', AuthenicationController_1.getAllUsers);
+authRouter.patch('/users/status/:id', AuthenicationController_1.toggleUserStatus);
+authRouter.put('/update-profile', checkActive_1.checkActiveStatus, multer_1.upload.single('avatar'), AuthenicationController_1.updateProfile);
+exports.default = authRouter;

@@ -4,7 +4,10 @@
   "main": "server.ts",
   "scripts": {
     "test": "npm run dev",
-   "dev": "nodemon --exec npx ts-node src/server.ts"
+    "dev": "nodemon --exec npx ts-node src/server.ts",
+    "build": "tsc",
+
+    "start": "node dist/server.js"
   },
   "author": "elisa",
   "license": "ISC",

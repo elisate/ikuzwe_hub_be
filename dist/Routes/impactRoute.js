@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const impactController_1 = require("../controllers/impactController");
+const multer_1 = require("../middlewares/multer");
+const impactRouter = (0, express_1.Router)();
+impactRouter.get('/getAll', impactController_1.getAllImpacts);
+impactRouter.post('/create', multer_1.upload.single('img'), impactController_1.createImpact);
+impactRouter.put('/update/:id', multer_1.upload.single('img'), impactController_1.updateImpact);
+impactRouter.delete('/delete/:id', impactController_1.deleteImpact);
+exports.default = impactRouter;
