@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-
-import { PrismaClient, $Enums } from '@prisma/client';
-const status: $Enums.DonationStatus = $Enums.DonationStatus.PENDING;
+import { PrismaClient, DonationStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -51,7 +49,7 @@ export const updateDonationStatus = async (req: Request, res: Response) => {
       where: { id: id },
       data: { 
         // Force uppercase to match Prisma Enum (e.g., "completed" -> "COMPLETED")
-        status: status.toUpperCase() as $Enums.DonationStatus
+        status: status.toUpperCase() as DonationStatus 
       }
     });
     
