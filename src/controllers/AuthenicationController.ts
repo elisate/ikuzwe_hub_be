@@ -3,6 +3,7 @@ import { PrismaClient,UserRole} from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../utilis/tokenGenerator';
 
+
 const prisma = new PrismaClient();
 
 

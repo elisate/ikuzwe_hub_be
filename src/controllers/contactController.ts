@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-
+import { UserRole, DonationStatus } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // 1. CREATE - Submit a new contact message (Public)
